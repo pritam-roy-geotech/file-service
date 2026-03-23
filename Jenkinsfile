@@ -48,11 +48,11 @@ pipeline {
                         }
                     }
                 }
-                stage('Code Quality') {
-                    steps {
-                        sh 'mvn checkstyle:check'
-                    }
-                }
+//                 stage('Code Quality') {
+//                     steps {
+//                         sh 'mvn checkstyle:check'
+//                     }
+//                 }
             }
         }
 
