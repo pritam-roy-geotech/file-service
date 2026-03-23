@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Invoice</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        .invoice-box { max-width: 900px; margin: auto; background: #fff; padding: 20px;
+                       border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { margin: 0 0 6px 0; }
+        .meta { color:#666; margin-bottom: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        table, th, td { border: 1px solid #ddd; }
+        th { background: #f0f0f0; padding: 10px; text-transform: uppercase; font-size: 12px; }
+        td { padding: 10px; font-size: 14px; }
+        .text-right { text-align: right; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background:#fafafa; border:1px solid #ddd; border-radius:8px; padding:12px; }
+        .summary { margin-top: 16px; padding: 12px; background: #fafafa; border: 1px solid #ddd; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="invoice-box">
+
+    <h2>Invoice</h2>
+    <div class="meta">
+        <div><strong>Invoice ID:</strong> <span th:text="${invoice.invoiceId}">—</span></div>
+        <div><strong>Generated On:</strong> <span th:text="${invoice.billGenerationDate}">—</span></div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Customer</h3>
+            <div><strong>Full Name:</strong> <span th:text="${invoice.fullName}"></span></div>
+            <div><strong>First Name:</strong> <span th:text="${invoice.firstName}"></span></div>
+            <div><strong>Last Name:</strong> <span th:text="${invoice.lastName}"></span></div>
+            <div><strong>Age:</strong> <span th:text="${invoice.age}"></span></div>
+            <div><strong>DOB:</strong> <span th:text="${invoice.DOB}"></span></div>
+        </div>
+        <div class="card">
+            <h3>Identifiers</h3>
+            <div><strong>Aadhaar No:</strong> <span th:text="${invoice.aadhaarNo}"></span></div>
+            <div><strong>Voter No:</strong> <span th:text="${invoice.voterNo}"></span></div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Item Name</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-right">Unit Price</th>
+            <th class="text-right">Line Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(invoice.items)}">
+            <td colspan="5" style="text-align:center; color:#666;">No items</td>
+        </tr>
+        <tr th:each="it, stat : ${invoice.items}">
+            <td th:text="${stat.count}">1</td>
+            <td>
+                <div th:text="${it.itemName}">Item</div>
+                <div style="color:#666;" th:text="${it.currency}">INR</div>
+            </td>
+            <td class="text-right" th:text="${it.itemQuantity}">1</td>
+            <td class="text-right" th:text="${#numbers.formatDecimal(it.itemPrice, 1, 2)}">0.00</td>
+            <!-- Line Total = price * qty (for display only) -->
+            <td class="text-right"
+                th:text="${#numbers.formatDecimal((it.itemPrice ?: 0) * (it.itemQuantity ?: 0), 1, 2)}">0.00</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="summary">
+        <div><strong>Total Quantity:</strong> <span th:text="${invoice.totalQuantity}">0</span></div>
+        <div><strong>Total Amount:</strong> <span th:text="${#numbers.formatDecimal(invoice.totalAmount ?: 0.0, 1, 2)}">0.00</span></div>
+    </div>
+
+</div>
+</body>
+</html>

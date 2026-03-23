@@ -1,0 +1,38 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: file-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test_db
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update   # create, create-drop, update, validate, none
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      file-size-threshold: 25MB
+  thymeleaf:
+    enabled: true
+    cache: false          # Disable cache during development
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet.content-type: text/html
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/master
+          jwk-set-uri: http://localhost:8080/realms/master/protocol/openid-connect/certs
+file:
+  upload-dir: ./uploads
+
