@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         APP_NAME = 'file-service'
+        JAVA_HOME = '/usr/lib/jvm/java-21-openjdk-amd64'
+        PATH = "/usr/lib/jvm/java-21-openjdk-amd64/bin:${env.PATH}"
     }
 
     tools {
