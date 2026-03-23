@@ -5,7 +5,7 @@ pipeline {
         APP_NAME = 'file-service'
         JAVA_HOME = '/usr/lib/jvm/java-21-openjdk-amd64'
         PATH = "/usr/lib/jvm/java-21-openjdk-amd64/bin:${env.PATH}"
-        DOCKER_IMAGE= 'file-service:latest'
+        DOCKER_IMAGE= 'roypritam26/file-service:latest'
     }
 
     tools {
