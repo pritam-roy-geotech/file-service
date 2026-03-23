@@ -5,6 +5,7 @@ pipeline {
         APP_NAME = 'file-service'
         JAVA_HOME = '/usr/lib/jvm/java-21-openjdk-amd64'
         PATH = "/usr/lib/jvm/java-21-openjdk-amd64/bin:${env.PATH}"
+        DOCKER_IMAGE= 'file-service:latest'
     }
 
     tools {
@@ -100,10 +101,10 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed!'
-            slackSend channel: '#ci-cd', message: "❌ Build #${BUILD_NUMBER} failed for ${APP_NAME}"
-            mail to: 'team@example.com',
-                    subject: "Build Failed: ${APP_NAME} #${BUILD_NUMBER}",
-                    body: "Check ${BUILD_URL} for details."
+//             slackSend channel: '#ci-cd', message: "❌ Build #${BUILD_NUMBER} failed for ${APP_NAME}"
+//             mail to: 'team@example.com',
+//                     subject: "Build Failed: ${APP_NAME} #${BUILD_NUMBER}",
+//                     body: "Check ${BUILD_URL} for details."
         }
         always {
             cleanWs()
